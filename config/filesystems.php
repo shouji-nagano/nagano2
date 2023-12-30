@@ -35,6 +35,15 @@ return [
             'root' => storage_path('app'),
             'throw' => false,
         ],
+        
+        'admin' => [
+        'driver' =>'local',
+        'root' => public_path('uploads'),
+        'visibility' =>'public',
+        'url' => env('APP_URL').'/uploads',
+        ],
+        
+        
 
         'public' => [
             'driver' => 'local',
@@ -56,12 +65,7 @@ return [
             'throw' => false,
         ],
         
-        'admin' => [
-        'driver' =>'local',
-        'root' => public_path('uploads'),
-        'visibility' =>'public',
-        'url' => env('APP_URL').'/uploads',
-    ],
+
 
     ],
 

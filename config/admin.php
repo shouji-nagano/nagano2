@@ -150,16 +150,19 @@ return [
     | disk and upload path.
     |
     */
-    'upload' => [
+    'upload'  => [
 
-        // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
+        // adminをlocalに変更します。
+        // adminのままであれば、admin/config/filesystems.php にadminを追加しても問題ないです。
+        'disk' => 'local',
 
-        // Image and file upload path under the disk above.
-        'directory' => [
-            'image' => 'images',
-            'file'  => 'files',
+        'directory'  => [
+            'image'  => 'image',
+            'file'   => 'file',
         ],
+
+        // ローカルに保存するので削除する。
+        //'host' => 'http://localhost:8000/upload/',
     ],
 
     /*
