@@ -12,21 +12,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('home');
-    $router->resource('books', booksController::class);
+    $router->resource('tests', TestControllers::class);
     
-Route::get('image/{filename}', function ($filename)
-{
-    $path = storage_path() . '/app/image/' . $filename;
 
-    if(!File::exists($path)) abort(404);
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});
-    
 });
