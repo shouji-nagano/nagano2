@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    // 'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>La</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -150,19 +150,16 @@ return [
     | disk and upload path.
     |
     */
-    'upload'  => [
+    'upload' => [
 
-        // adminをlocalに変更します。
-        // adminのままであれば、admin/config/filesystems.php にadminを追加しても問題ないです。
-        'disk' => 'local',
+        // Disk in `config/filesystem.php`.
+        'disk' => 'admin',
 
-        'directory'  => [
-            'image'  => 'image',
-            'file'   => 'file',
+        // Image and file upload path under the disk above.
+        'directory' => [
+            'image' => 'images',
+            'file'  => 'files',
         ],
-
-        // ローカルに保存するので削除する。
-        //'host' => 'http://localhost:8000/upload/',
     ],
 
     /*
