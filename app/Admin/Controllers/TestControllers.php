@@ -3,10 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Models\test;
+use App\Admin\Extensions\Tools\ImportButton;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Controllers\HasResourceActions;
+
+
 
 class TestControllers extends AdminController
 {
@@ -49,8 +53,20 @@ class TestControllers extends AdminController
         $grid->column('摘要', __('摘要'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+        
+        $grid->tools(function ($tools) {
+        $tools->append(new ImportButton('tests'));
+        });
 
         return $grid;
+    }
+    
+        protected function importCsv(Content $content, Request $request)
+    {
+        // アップロードされたCSVファイル
+        $file = $request->file('file');
+        // インポート
+        Excel::import(new testsImport(), $file);
     }
 
     /**

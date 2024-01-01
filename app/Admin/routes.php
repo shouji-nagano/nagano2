@@ -13,6 +13,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('tests', TestControllers::class);
-    
+    $router->post('tests/csv/import', 'TestController@importCsv');
 
 });
