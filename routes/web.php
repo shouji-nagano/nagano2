@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('excel/import', 'ExcelController@import');
+// Route::post('excel/import', 'ExcelController@import');
+// Route::get('users',[UsersController::class,'export']);
+// Route::resource('/users','UsersController');
+Route::resource('/users', UsersController::class);
+
 

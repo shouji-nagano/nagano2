@@ -29,6 +29,13 @@ class ImportButton extends AbstractTool
     {
         return <<<EOT
 $('#import-file').on('change', function () {
+
+    var file = $("#import-file").prop("files")[0];
+    if (!file) {
+    toastr.error('Please select a file.');
+    return;
+    }
+
     var isConfirmed = confirm("Is this OK?");
     if (!isConfirmed) {
         return;
@@ -49,8 +56,12 @@ $('#import-file').on('change', function () {
             console.log(response);
             $.pjax.reload("#pjax-container");
             toastr.success('Upload Successful');
+        },
+        error: function (xhr, status, error) {
+        console.error(error);
+        toastr.error('An error occurred');
         }
-    })
+    });
 });
 EOT;
     }

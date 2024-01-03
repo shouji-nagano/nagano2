@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Routing\Router;
+use App\Admin\Controllers\TestControllers;
+
 
 Admin::routes();
 
@@ -13,6 +15,8 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('tests', TestControllers::class);
-    $router->post('tests/csv/import', 'TestController@importCsv');
-
+    $router->post('/tests/csv/import', [TestControllers::class, 'importCsv']);
 });
+
+
+

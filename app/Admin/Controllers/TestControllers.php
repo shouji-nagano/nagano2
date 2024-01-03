@@ -2,15 +2,16 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\test;
+use Illuminate\Http\Request;
+use App\Models\Test;
 use App\Admin\Extensions\Tools\ImportButton;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Controllers\HasResourceActions;
-
-
+use Maatwebsite\Excel\Facades\Excel; 
+use App\Imports\TestImport;
 
 class TestControllers extends AdminController
 {
@@ -19,7 +20,7 @@ class TestControllers extends AdminController
      *
      * @var string
      */
-    protected $title = 'test';
+    protected $title = 'Test';
 
     /**
      * Make a grid builder.
@@ -31,28 +32,30 @@ class TestControllers extends AdminController
         $grid = new Grid(new test());
 
         $grid->column('id', __('Id'));
-        $grid->column('帳票No', __('帳票No'));
-        $grid->column('顧客コード', __('顧客コード'));
-        $grid->column('顧客名', __('顧客名'));
-        $grid->column('請求締日', __('請求締日'));
-        $grid->column('入港日', __('入港日'));
-        $grid->column('通関許可日', __('通関許可日'));
-        $grid->column('納入日', __('納入日'));
-        $grid->column('REF No', __('REF No'));
-        $grid->column('Invoice No', __('Invoice No'));
-        $grid->column('No', __('No'));
-        $grid->column('請求名', __('請求名'));
-        $grid->column('規格', __('規格'));
-        $grid->column('数量', __('数量'));
-        $grid->column('単位', __('単位'));
-        $grid->column('明細単価', __('明細単価'));
-        $grid->column('合計金額(税抜)', __('合計金額(税抜)'));
-        $grid->column('税区分(テキスト)', __('税区分(テキスト)'));
-        $grid->column('%', __('%'));
-        $grid->column('税率', __('税率'));
-        $grid->column('摘要', __('摘要'));
+        $grid->column('tyouhyou_no', __('帳票NO'));
+        $grid->column('customer_code', __('商品コード'));
+        $grid->column('customer_name', __('顧客名'));
+        $grid->column('billing_closing_date', __('請求締日'))->default(date('Y-m-d'));
+        $grid->column('arrival_date', __('入港日'))->default(date('Y-m-d'));
+        $grid->column('customs_clearance_date', __('通関許可日'))->default(date('Y-m-d'));
+        $grid->column('delivery_date', __('納入日'))->default(date('Y-m-d'));
+        $grid->column('ref_no', __('REF No'));
+        $grid->column('invoice_no', __('Invoice No'));
+        $grid->column('no', __('No'));
+        $grid->column('billing_name', __('請求名'));
+        $grid->column('specification', __('規格'));
+        $grid->column('quantity', __('数量'));
+        $grid->column('unit', __('単位'));
+        $grid->column('unit_price', __('明細単価'));
+        $grid->column('total_amount_excluding_tax', __('合計金額(税抜)'));
+        $grid->column('tax_category_text', __('税区分(テキスト)'));
+        $grid->column('percentage', __('%'));
+        // $grid->column('tax_rate', __('税率'));
+        // $grid->column('summary', __('摘要'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+
+
         
         $grid->tools(function ($tools) {
         $tools->append(new ImportButton('tests'));
@@ -60,14 +63,16 @@ class TestControllers extends AdminController
 
         return $grid;
     }
-    
-        protected function importCsv(Content $content, Request $request)
+
+    protected function importCsv(TestImport $testimpo, Request $request)
     {
         // アップロードされたCSVファイル
         $file = $request->file('file');
         // インポート
-        Excel::import(new testsImport(), $file);
+        Excel::import(new TestImport(), $file);
     }
+    
+
 
     /**
      * Make a show builder.
@@ -80,26 +85,26 @@ class TestControllers extends AdminController
         $show = new Show(test::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('帳票No', __('帳票No'));
-        $show->field('顧客コード', __('顧客コード'));
-        $show->field('顧客名', __('顧客名'));
-        $show->field('請求締日', __('請求締日'));
-        $show->field('入港日', __('入港日'));
-        $show->field('通関許可日', __('通関許可日'));
-        $show->field('納入日', __('納入日'));
-        $show->field('REF No', __('REF No'));
-        $show->field('Invoice No', __('Invoice No'));
-        $show->field('No', __('No'));
-        $show->field('請求名', __('請求名'));
-        $show->field('規格', __('規格'));
-        $show->field('数量', __('数量'));
-        $show->field('単位', __('単位'));
-        $show->field('明細単価', __('明細単価'));
-        $show->field('合計金額(税抜)', __('合計金額(税抜)'));
-        $show->field('税区分(テキスト)', __('税区分(テキスト)'));
-        $show->field('%', __('%'));
-        $show->field('税率', __('税率'));
-        $show->field('摘要', __('摘要'));
+        $show->field('tyouhyou_no', __('帳票NO'));
+        $show->field('customer_code', __('商品コード'));
+        $show->field('customer_name', __('顧客名'));
+        $show->field('billing_closing_date', __('請求締日'))->default(date('Y-m-d'));
+        $show->field('arrival_date', __('入港日'))->default(date('Y-m-d'));
+        $show->field('customs_clearance_date', __('通関許可日'))->default(date('Y-m-d'));
+        $show->field('delivery_date', __('納入日'))->default(date('Y-m-d'));
+        $show->field('ref_no', __('REF No'));
+        $show->field('invoice_no', __('Invoice No'));
+        $show->field('no', __('No'));
+        $show->field('船名 ', __('請求名'));
+        $show->field('specification', __('規格'));
+        $show->field('quantity', __('数量'));
+        $show->field('unit', __('単位'));
+        $show->field('unit_price', __('明細単価'));
+        $show->field('total_amount_excluding_tax', __('合計金額(税抜)'));
+        $show->field('tax_category_text', __('税区分(テキスト)'));
+        $show->field('percentage', __('%'));
+        $show->field('tax_rate', __('税率'));
+        $show->field('summary', __('摘要'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -115,27 +120,29 @@ class TestControllers extends AdminController
     {
         $form = new Form(new test());
 
-        $form->text('帳票No', __('帳票No'));
-        $form->number('顧客コード', __('顧客コード'));
-        $form->text('顧客名', __('顧客名'));
-        $form->date('請求締日', __('請求締日'))->default(date('Y-m-d'));
-        $form->date('入港日', __('入港日'))->default(date('Y-m-d'));
-        $form->date('通関許可日', __('通関許可日'))->default(date('Y-m-d'));
-        $form->date('納入日', __('納入日'))->default(date('Y-m-d'));
-        $form->text('REF No', __('REF No'));
-        $form->text('Invoice No', __('Invoice No'));
-        $form->number('No', __('No'));
-        $form->text('請求名', __('請求名'));
-        $form->text('規格', __('規格'));
-        $form->number('数量', __('数量'));
-        $form->text('単位', __('単位'));
-        $form->decimal('明細単価', __('明細単価'));
-        $form->decimal('合計金額(税抜)', __('合計金額(税抜)'));
-        $form->text('税区分(テキスト)', __('税区分(テキスト)'));
-        $form->decimal('%', __('%'));
-        $form->decimal('税率', __('税率'));
-        $form->text('摘要', __('摘要'));
+        $form->text('tyouhyou_no', __('帳票NO'));
+        $form->number('customer_code', __('商品コード'));
+        $form->text('customer_name', __('顧客名'));
+        $form->date('billing_closing_date', __('請求締日'))->default(date('Y-m-d'));
+        $form->date('arrival_date', __('入港日'))->default(date('Y-m-d'));
+        $form->date('customs_clearance_date', __('通関許可日'))->default(date('Y-m-d'));
+        $form->date('delivery_date', __('納入日'))->default(date('Y-m-d'));
+        $form->text('ref_no', __('REF No'));
+        $form->text('invoice_no', __('Invoice No'));
+        $form->number('no', __('No'));
+        $form->text('船名 ', __('請求名'));
+        $form->text('specification', __('規格'));
+        $form->number('quantity', __('数量'));
+        $form->text('unit', __('単位'));
+        $form->decimal('unit_price', __('明細単価'));
+        $form->decimal('total_amount_excluding_tax', __('合計金額(税抜)'));
+        $form->text('tax_category_text', __('税区分(テキスト)'));
+        $form->decimal('percentage', __('%'));
+        $form->decimal('tax_rate', __('税率'));
+        $form->text('summary', __('摘要'));
 
         return $form;
     }
+    
+
 }
