@@ -1,0 +1,14 @@
+[90m= [39m[34;4mApp\Models\User[39;24m {#7620
+    [34mid[39m: [35m2[39m,
+    [34mrole_id[39m: [36mnull[39m,
+    [34mname[39m: "[32mnagano[39m",
+    [34memail[39m: "[32mnagano@nagano[39m",
+    [34mavatar[39m: "[32musers/default.png[39m",
+    [34memail_verified_at[39m: [36mnull[39m,
+    #[33mpassword[39m: "[32m$2y$10$TFw3Wd93CpOwfAULADDfd.VwYBA8yAhsUlEYSRJrW4UETu46TteA6[39m",
+    #[33mremember_token[39m: [36mnull[39m,
+    [34msettings[39m: [36mnull[39m,
+    [34mcreated_at[39m: "[32m2023-12-27 21:02:04[39m",
+    [34mupdated_at[39m: "[32m2023-12-27 21:02:04[39m",
+  }
+
