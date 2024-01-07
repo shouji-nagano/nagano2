@@ -85,30 +85,14 @@ class BillSourceDataController extends AdminController
         return $grid;
     }
 
-   protected function importCsv(BillImport $billimport, Request $request)
-{
-    // アップロードされたCSVファイル
-    $file = $request->file('file');
-    
-    if (!$file) {
-        // エラーメッセージを返す
-        return response()->json(['error' => 'ファイルがアップロードされていません'], 400);
-    }
 
-    try {
+    protected function importCsv(BillImport $billimport, Request $request)
+    {
+        // アップロードされたCSVファイル
+        $file = $request->file('file');
         // インポート
         Excel::import(new BillImport(), $file);
-
-        // インポート成功時のレスポンス
-        return response()->json(['success' => 'データが正常にインポートされました']);
-    } catch (\Exception $e) {
-        // エラーログを記録
-        Log::error($e->getMessage());
-
-        // クライアントにエラーメッセージを返す
-        return response()->json(['error' => 'インポート中にエラーが発生しました'], 500);
     }
-}
 
 
     /**
