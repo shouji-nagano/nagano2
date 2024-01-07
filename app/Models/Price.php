@@ -2,17 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class Price extends Authenticatable
+
+class Price extends Model
 {
 
-    protected $fillable = [
-        'code',
-        'name',
-        'price'
-];
+    protected $table = 'prices'; // テーブル名を指定
+    
 }

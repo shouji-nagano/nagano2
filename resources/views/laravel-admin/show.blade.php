@@ -6,6 +6,7 @@
     <div class="col-md-12">
         @foreach($relations as $relation)
             {!!  $relation->render() !!}
+            
         @endforeach
     </div>
 </div>

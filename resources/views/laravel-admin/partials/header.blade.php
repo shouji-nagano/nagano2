@@ -18,6 +18,7 @@
         <ul class="nav navbar-nav hidden-sm visible-lg-block">
         {!! Admin::getNavbar()->render('left') !!}
         </ul>
+        
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
@@ -54,6 +55,8 @@
                         </li>
                     </ul>
                 </li>
+                
+                
                 <!-- Control Sidebar Toggle Button -->
                 {{--<li>--}}
                     {{--<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--}}

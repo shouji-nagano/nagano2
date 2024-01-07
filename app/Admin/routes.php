@@ -2,7 +2,7 @@
 
 use Illuminate\Routing\Router;
 use App\Admin\Controllers\TestControllers;
-use App\Admin\Controllers\EcControllers;
+use App\Admin\Controllers\BillSourceDataController;
 
 
 
@@ -18,8 +18,8 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('tests', TestControllers::class);
     $router->post('/tests/csv/import', [TestControllers::class, 'importCsv']);
-    $router->resource('ecs', EcController::class);
-
+    $router->resource('bill-source-datas', BillSourceDataController::class);
+    $router->post('/bill-source-datas/csv/import',  [BillSourceDataController::class, 'importCsv']);
 
 });
 

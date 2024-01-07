@@ -11,6 +11,7 @@ class Test extends Model
 
     protected $table = 'tests';
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,4 +40,10 @@ protected $fillable = [
         'summary',                  // 旧：'摘要'
         
     ];
+            public function comments()
+    {
+        return $this->hasMany(Test::class);
+        
+    }
+
 }

@@ -30,6 +30,11 @@ class TestControllers extends AdminController
     protected function grid()
     {
         $grid = new Grid(new test());
+        
+        $grid->filter(function($filter){
+        $filter->like('tyouhyou_no', '帳票NO');
+        $filter->like('customer_code', '商品コード');
+        });
 
         $grid->column('id', __('Id'));
         $grid->column('tyouhyou_no', __('帳票NO'));
@@ -50,10 +55,10 @@ class TestControllers extends AdminController
         $grid->column('total_amount_excluding_tax', __('合計金額(税抜)'));
         $grid->column('tax_category_text', __('税区分(テキスト)'));
         $grid->column('percentage', __('%'));
-        // $grid->column('tax_rate', __('税率'));
-        // $grid->column('summary', __('摘要'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('tax_rate', __('税率'));
+        $grid->column('summary', __('摘要'));
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
 
 
         
@@ -105,8 +110,8 @@ class TestControllers extends AdminController
         $show->field('percentage', __('%'));
         $show->field('tax_rate', __('税率'));
         $show->field('summary', __('摘要'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        // $show->field('created_at', __('Created at'));
+        // $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
