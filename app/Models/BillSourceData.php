@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class BillSourceData extends Model
 {
     use HasFactory;
+ public $timestamps = false;
+
     
  protected $table = 'bill_source_data';
+ 
 
     protected $fillable = [
         'misc_billing_request_number',

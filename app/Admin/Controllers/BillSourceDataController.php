@@ -12,6 +12,8 @@ use Encore\Admin\Show;
 use Encore\Admin\Controllers\HasResourceActions;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\BillImport;
+use Illuminate\Support\Facades\Log;
+
 
 
 class BillSourceDataController extends AdminController
@@ -85,14 +87,27 @@ class BillSourceDataController extends AdminController
         return $grid;
     }
 
-
-    protected function importCsv(BillImport $billimport, Request $request)
+ protected function importCsv(BillImport $billimport, Request $request)
     {
         // アップロードされたCSVファイル
-        $file = $request->file('file');
-        // インポート
-        Excel::import(new BillImport(), $file);
+        $file = request()->file('file');
+
+        try {
+            $import = new BillImport();
+            Excel::import($import, $file);
+        } catch (ValidationException $e) {
+            Log::alert($e->errors());
+        }
     }
+
+    // public function importCsv(BillImport $billimport, Request $request)
+    // {
+    //         Log::info('importCsv method called');
+    //     // アップロードされたCSVファイル
+    //     $file = $request->file('file');
+    //     // インポート
+    //     Excel::import(new BillImport(), $file);
+    // }
 
 
     /**

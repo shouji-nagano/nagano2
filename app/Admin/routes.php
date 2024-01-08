@@ -19,7 +19,7 @@ Route::group([
     $router->resource('tests', TestControllers::class);
     $router->post('/tests/csv/import', [TestControllers::class, 'importCsv']);
     $router->resource('bill-source-datas', BillSourceDataController::class);
-    $router->post('/bill-source-datas/csv/import',  [BillSourceDataController::class, 'importCsv']);
+    $router->post('/bill_source_data/csv/import',  [BillSourceDataController::class, 'importCsv']);
 
 });
 
