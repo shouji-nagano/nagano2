@@ -56,6 +56,8 @@ class BillSourceData extends Model
         'client_address1',
         'client_address2',
         'billing_client_name',
+        'file_name',
+        'uploaded_at',
     ];
 
     public function importedFile()

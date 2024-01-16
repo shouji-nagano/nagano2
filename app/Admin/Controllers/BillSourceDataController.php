@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BillSourceData;
 use App\Admin\Extensions\Tools\ImportButton;
+use Encore\Admin\Widgets\Table;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -33,7 +34,7 @@ class BillSourceDataController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new BillSourceData());
-
+        
         $grid->column('id', __('ID'));
         $grid->column('misc_billing_request_number', __('請求番号'));
         $grid->column('misc_billing_request_date', __('請求日'));
@@ -79,35 +80,69 @@ class BillSourceDataController extends AdminController
         $grid->column('imported_file_id', __('インポートファイルID'));
         $grid->column('created_at', __('作成日'));
         $grid->column('updated_at', __('更新日'));
+        $grid->column('file_name', 'ファイル名');
+        $grid->column('uploaded_at', 'アップロード日時');
+        
+        $grid->filter(function ($filter) {
+        $filter->like('file_name', 'ファイル名');
+        $filter->between('uploaded_at', 'アップロード日時')->datetime();
+    });
+    
+        $grid->column('file_name', 'ファイル名')->modal('詳細情報', function ($model) {
+        // モーダル内に表示するデータを取得
+        $details = [
+            '請求番号' => $model->misc_billing_request_number,
+            '請求日' => $model->misc_billing_summary,
+            // ... 他の関連するフィールド ...
+        ];
+
+        // モーダル内に表示するためのテーブルを作成
+        return new Table(['項目', '値'], $details);
+    });
+        
         
         $grid->tools(function ($tools) {
         $tools->append(new ImportButton('bill_source_data'));
-        });
+    });
+        
+        
+        // $grid->paginate(10); // ページネーション
+        // $grid->sortable(); // ソート可能なカラム
 
-        return $grid;
+        // return $grid;
     }
 
- protected function importCsv(BillImport $billimport, Request $request)
-    {
-        // アップロードされたCSVファイル
-        $file = request()->file('file');
+//  protected function importCsv(BillImport $billimport, Request $request)
+//     {
+//         // アップロードされたCSVファイル
+//         $file = request()->file('file');
 
-        try {
-            $import = new BillImport();
-            Excel::import($import, $file);
-        } catch (ValidationException $e) {
-            Log::alert($e->errors());
-        }
+//         try {
+//             $import = new BillImport();
+//             Excel::import($import, $file);
+//         } catch (ValidationException $e) {
+//             Log::alert($e->errors());
+//         }
+//     }
+    
+
+protected function importCsv(Request $request)
+{
+    // アップロードされたCSVファイル
+    $file = $request->file('file');
+    $fileName = $file->getClientOriginalName(); // ファイル名
+    $uploadedAt = now(); // 現在の日時
+
+    try {
+        // BillImport インスタンスの作成
+        $import = new BillImport($fileName, $uploadedAt);
+
+        // CSVファイルのインポート
+        Excel::import($import, $file);
+    } catch (ValidationException $e) {
+        Log::alert($e->errors());
     }
-
-    // public function importCsv(BillImport $billimport, Request $request)
-    // {
-    //         Log::info('importCsv method called');
-    //     // アップロードされたCSVファイル
-    //     $file = $request->file('file');
-    //     // インポート
-    //     Excel::import(new BillImport(), $file);
-    // }
+}
 
 
     /**

@@ -19,9 +19,7 @@
  */
  
  use Encore\Admin\Grid\Column;
- use Encore\Admin\Facades\Admin;
-
-
+ 
 
 Column::extend('color', function ($value, $color) {
     return "<span style='color: $color'>$value</span>";

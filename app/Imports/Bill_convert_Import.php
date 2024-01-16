@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Row;
 use Illuminate\Support\Facades\Log;
 
-class BillImport implements ToModel, WithHeadingRow
+class Bill_convert_Import implements ToModel, WithHeadingRow
 {
     protected $fileName;
     protected $uploadedAt;

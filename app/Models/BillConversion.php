@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BillConversion extends Model
 {
+    public $timestamps = false;
+
     // データベーステーブル名
     protected $table = 'bill_conversion';
 
@@ -31,14 +33,7 @@ class BillConversion extends Model
         'tax_category_text', // 税区分(テキスト) (Tax Category - Text)
         'tax_rate', // 税率 (Tax Rate)
         'description', // 摘要 (Description)
-        'imported_file_id', // 外部キー
     ];
-
-    // 外部キーとしての関連を定義
-    public function importedFile()
-    {
-        return $this->belongsTo(ImportedFile::class, 'imported_file_id');
-    }
 
     // 他の必要なメソッドやロジックを追加
 }
